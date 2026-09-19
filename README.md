@@ -66,4 +66,4 @@ security. Use at your own risk.
 
 ## License
 
-[MIT](LICENSE)
+All rights reserved. The source is public for viewing only; see [LICENSE](LICENSE). Contact the author before using or redistributing it.
