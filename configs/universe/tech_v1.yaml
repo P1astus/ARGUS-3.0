@@ -1,0 +1,65 @@
+# ARGUS tech universe, v1 -- 26 US-listed software/internet mega- and large-caps.
+#
+# CORPUS-ONLY. This file feeds `engine corpus-build` and the retrieval/extraction stack;
+# it is NOT wired into `quant build-dataset` or `quant validate`. Handoff docs/HANDOFF.md
+# §5 decouples the quant universe from the text corpus on purpose -- price history is
+# cheap and wide, curated text is expensive and narrow -- and the Phase 1 quant gate was
+# validated (well, failed, see §4d) against `semis_v1.yaml` specifically. Mixing in
+# mega-cap tech would change the cross-section (dollar-neutral equal-weight benchmark,
+# leave-one-out labelling) that gate result describes. If quant coverage of these names
+# is ever wanted, that is a deliberate separate decision, not a side effect of this file.
+#
+# Six new SubSegment categories (contracts/quant.py), same mechanism as the five
+# semiconductor sub-segments: business-model buckets that drive what "cycle" framing the
+# extraction prompt uses, not an industry classification. See tools/taxonomy.py --
+# PROFILES_TECH is flagged there as UNMEASURED until this corpus exists and retrieval has
+# been run against it (the same correction pass MEMORY's key_metrics went through).
+#
+# Ticker selection: mega/large-cap names the user actually trades alongside semis,
+# spanning six distinct business models so each SubSegment has more than one instance.
+# Not exhaustive -- this is a starting scope, sized to be buildable in one session.
+
+start_date: "2010-01-01"
+
+filters:
+  min_price: 5.0
+  min_dollar_volume_60d: 10_000_000
+
+tickers:
+  tech_ad_platform:
+    - {symbol: "GOOGL"}
+    - {symbol: "META"}
+
+  tech_device_ecosystem:
+    - {symbol: "AAPL"}
+
+  tech_cloud_saas:
+    - {symbol: "MSFT"}
+    - {symbol: "ORCL"}
+    - {symbol: "CRM"}
+    - {symbol: "ADBE"}
+    - {symbol: "INTU"}
+    - {symbol: "NOW"}
+    - {symbol: "WDAY"}
+    - {symbol: "SNOW"}
+    - {symbol: "DDOG"}
+    - {symbol: "NET"}
+    - {symbol: "MDB"}
+    - {symbol: "TEAM"}
+    - {symbol: "IBM"}
+    - {symbol: "CSCO"}
+    - {symbol: "PLTR"}
+
+  tech_cybersecurity:
+    - {symbol: "PANW"}
+    - {symbol: "CRWD"}
+    - {symbol: "ZS"}
+
+  tech_commerce_platform:
+    - {symbol: "AMZN"}
+    - {symbol: "SHOP"}
+    - {symbol: "PYPL"}
+    - {symbol: "UBER"}
+
+  tech_streaming_media:
+    - {symbol: "NFLX"}

@@ -1,0 +1,27 @@
+# Cold-start test universe: a single small-cap name absent from the corpus.
+#
+# Arteris (AIP) is a semiconductor IP licensor -- it sells network-on-chip interconnect
+# IP and licenses it to chip designers. It is NOT in semis_v1.yaml and has ZERO documents
+# in the corpus, so a briefing for it must come entirely from the live EDGAR path.
+#
+# Sub-segment is set to `fabless` as the closest of the five available, but the fit is
+# imperfect and worth watching in the output: Arteris licenses IP rather than selling
+# chips, so its economics are royalty/annual-contract-value driven, not the sell-in /
+# sell-through channel-inventory dynamics the fabless profile in taxonomy.py describes.
+# If the extraction hunts for "channel inventory weeks" and finds nothing, that is the
+# taxonomy's coverage gap showing up, not a retrieval failure.
+
+start_date: "2021-10-27"   # AIP IPO'd late October 2021
+
+filters:
+  min_price: 0.0             # small cap -- do not screen it out
+  min_dollar_volume_60d: 0
+  require_us_primary_listing: true
+
+benchmark:
+  method: equal_weight
+  reference_only: ["SOXX", "^SOX"]
+
+tickers:
+  fabless:
+    - {symbol: "AIP"}

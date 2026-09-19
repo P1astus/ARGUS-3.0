@@ -1,0 +1,44 @@
+# ARGUS foreign-filer universe, v1 -- 12 names already in semis_v1.yaml's ticker lists
+# that were silently absent from the corpus. VERIFIED against SEC's own submissions API
+# (2026-08-16): every one of these files 20-F and has NEVER filed a 10-K or 10-Q. That is
+# why `engine corpus-build --universe semis_v1.yaml` (10-K/10-Q/8-K only, the default
+# `forms`) discovered zero documents for them -- not a bug in discovery, a mismatch
+# between the forms requested and the forms these issuers actually file.
+#
+# CORPUS-ONLY, same reasoning as tech_v1.yaml -- not wired into `quant build-dataset`.
+# Segments match each ticker's existing assignment in semis_v1.yaml.
+#
+# Build with: engine corpus-build --universe configs/universe/foreign_filers_20f_v1.yaml
+#             --forms 10-K,10-Q,8-K,20-F --skip-discovery=false
+# (20-F must be requested explicitly; the default `forms` excludes it.)
+
+start_date: "2010-01-01"
+
+filters:
+  min_price: 5.0
+  min_dollar_volume_60d: 10_000_000
+
+tickers:
+  equipment:
+    - {symbol: "ASML"}
+    - {symbol: "CAMT"}
+    - {symbol: "NVMI"}
+
+  fabless:
+    - {symbol: "HIMX"}
+
+  foundry:
+    - {symbol: "TSM"}
+    - {symbol: "UMC"}
+    - {symbol: "GFS"}
+    - {symbol: "TSEM"}
+    - {symbol: "ASX"}
+
+  analog:
+    - {symbol: "STM"}
+    - {symbol: "IFNNY"}
+    - {symbol: "IMOS"}
+
+# NOT included: SGH. It has no entry at all in SEC's company_tickers.json map -- a
+# different, smaller problem (likely a ticker/registrant mismatch) than the 20-F issue
+# this file exists to fix. Investigate separately if SGH coverage is wanted.

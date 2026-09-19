@@ -1,0 +1,22 @@
+# ARGUS SHOP backfill, v1 -- one ticker, scoped separately from tech_v1.yaml so this
+# build doesn't re-discover the other 25 tech tickers (which already have full 10-K/10-Q
+# coverage and would just waste time re-querying form types they don't file).
+#
+# SHOP is already in tech_v1.yaml under tech_commerce_platform; this file exists purely
+# to target the corpus-build CLI at SHOP alone with an expanded --forms list. Per the
+# date-coverage audit (docs/HANDOFF.md §6, §12a): SHOP converted from Canadian
+# 40-F/6-K filer to US domestic 10-K/10-Q filer only in 2025-02, so its real pre-2025
+# history is exclusively under 40-F (annual) and 6-K (furnished, mostly press releases).
+#
+# Build with: engine corpus-build --universe configs/universe/shop_40f_v1.yaml
+#             --forms 10-K,10-Q,8-K,40-F,6-K
+
+start_date: "2010-01-01"
+
+filters:
+  min_price: 5.0
+  min_dollar_volume_60d: 10_000_000
+
+tickers:
+  tech_commerce_platform:
+    - {symbol: "SHOP"}

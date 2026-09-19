@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.py[cod]
+.env
+
+# Large, regenerable artifacts. Never committed.
+data/
+artifacts/
+*.sqlite
+*.parquet
+*.npy
+*.safetensors
+
+.DS_Store
+.ipynb_checkpoints/
+.claude/settings.local.json

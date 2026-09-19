@@ -1,0 +1,113 @@
+# ARGUS semiconductor universe, v1
+#
+# ~100 US-listed names across the five sub-segments, 2010-present. Scope was widened from
+# the original 15-ticker pilot because cross-sectional rank IC on 15 names has a per-day
+# standard deviation around 0.25-0.30 -- a true IC of 0.04 is indistinguishable from zero
+# at that width, which would make the Phase 1 gate unmeasurable.
+#
+# The CPT corpus stays at the 15 pilot tickers (marked `pilot: true`). Quant universe and
+# text corpus are deliberately decoupled: price history is cheap and wide, curated text is
+# expensive and narrow.
+
+start_date: "2010-01-01"
+
+filters:
+  min_price: 5.0                    # avoid sub-$5 microstructure noise
+  min_dollar_volume_60d: 10_000_000 # tradeable size for a swing book
+  require_us_primary_listing: true
+
+benchmark:
+  # Equal-weight, constructed from the universe itself. NOT cap-weighted SOXX:
+  # NVDA can exceed 10% of a cap-weighted semis index, so its own move would compress
+  # its measured relative return. See labels.py for the leave-one-out construction.
+  method: equal_weight
+  reference_only: ["SOXX", "^SOX"]  # reported for context, never used for labelling
+
+tickers:
+  equipment:
+    - {symbol: "AMAT", pilot: true}
+    - {symbol: "LRCX", pilot: true}
+    - {symbol: "KLAC", pilot: true}
+    - {symbol: "ASML"}          # US-listed ADR
+    - {symbol: "TER"}
+    - {symbol: "ENTG"}
+    - {symbol: "MKSI"}
+    - {symbol: "ONTO"}
+    - {symbol: "ACLS"}
+    - {symbol: "UCTT"}
+    - {symbol: "ICHR"}
+    - {symbol: "AEIS"}
+    - {symbol: "PLAB"}
+    - {symbol: "CAMT"}
+    - {symbol: "NVMI"}
+    - {symbol: "VECO"}
+    - {symbol: "AXTI"}
+    - {symbol: "COHU"}
+    - {symbol: "FORM"}
+    - {symbol: "KLIC"}
+
+  fabless:
+    - {symbol: "NVDA", pilot: true}
+    - {symbol: "AMD", pilot: true}
+    - {symbol: "AVGO", pilot: true}
+    - {symbol: "QCOM", pilot: true}
+    - {symbol: "MRVL", pilot: true}
+    - {symbol: "LSCC"}
+    - {symbol: "MPWR"}
+    - {symbol: "SLAB"}
+    - {symbol: "SITM"}
+    - {symbol: "RMBS"}
+    - {symbol: "SYNA"}
+    - {symbol: "AMBA"}
+    - {symbol: "HIMX"}
+    - {symbol: "QRVO"}
+    - {symbol: "SWKS"}
+    - {symbol: "CRUS"}
+    - {symbol: "POWI"}
+    - {symbol: "DIOD"}
+    - {symbol: "ALGM"}
+    - {symbol: "INDI"}
+    - {symbol: "NVTS"}
+    - {symbol: "SMTC"}
+    - {symbol: "PI"}
+    - {symbol: "CEVA"}
+    - {symbol: "QUIK"}
+
+  foundry:
+    - {symbol: "TSM", pilot: true}
+    - {symbol: "UMC"}
+    - {symbol: "GFS"}
+    - {symbol: "TSEM"}
+    - {symbol: "SKYT"}
+
+  memory:
+    - {symbol: "MU", pilot: true}
+    - {symbol: "WDC", pilot: true}
+    - {symbol: "STX"}
+    - {symbol: "NTAP"}
+    # Was "SGH" -- SMART Global Holdings renamed to Penguin Solutions (PENG) 2023-12-15,
+    # a genuine continuation per data/delisted.py, not a new company. A stale "SGH" entry
+    # under `analog` (dead in SEC's symbol map, so CIK resolution silently found nothing)
+    # duplicated this one until 2026-08-16 -- removed there, kept only here.
+    - {symbol: "PENG"}
+
+  analog:
+    - {symbol: "TXN", pilot: true}
+    - {symbol: "ADI", pilot: true}
+    - {symbol: "NXPI", pilot: true}
+    - {symbol: "MCHP", pilot: true}
+    - {symbol: "ON", pilot: true}
+    - {symbol: "STM"}
+    - {symbol: "IFNNY"}
+    - {symbol: "VSH"}
+    - {symbol: "AOSL"}
+    - {symbol: "MTSI"}
+    - {symbol: "WOLF"}
+    - {symbol: "NVEC"}
+    - {symbol: "IMOS"}
+    - {symbol: "ASX"}
+
+# Names that exited the tape. Registry lives in src/argus/data/delisted.py so the exit
+# dates and reasons stay code-adjacent and testable; listed here only for visibility.
+# yfinance cannot serve these -- coverage reports quantify what that costs per fold.
+delisted_registry: "argus.data.delisted.DELISTED"
